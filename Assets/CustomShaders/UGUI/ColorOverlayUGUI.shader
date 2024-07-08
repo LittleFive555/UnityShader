@@ -121,7 +121,8 @@ Shader "UI/Default"
 
                 fixed grayValue = dot(color.rgb, fixed3(0.299, 0.587, 0.114));
                 half4 grayColor = half4(grayValue, grayValue, grayValue, color.a);
-                color.rgb = color.rgb * (1 - _OverlayColor.a) + 2 * grayColor.rgb * _OverlayColor.rgb * _OverlayColor.a;
+                fixed avg = (_OverlayColor.r + _OverlayColor.g + _OverlayColor.b) / 3;
+                color.rgb = color.rgb * (1 - _OverlayColor.a) + (grayColor.rgb + (_OverlayColor.rgb - avg)) * _OverlayColor.a;
                 return color;
             }
         ENDCG
